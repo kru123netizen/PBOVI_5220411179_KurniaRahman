@@ -1,0 +1,93 @@
+class Katalog:
+    def __init__(self):
+        self.items = []
+        
+    def cari(self, query):
+        hasilPencarian = []
+        for item in self.items:
+            if query.lower() in item.judul.lower() or query.lower() in item.subjek.lower():
+                hasilPencarian.append(item)
+        return hasilPencarian
+        
+        
+
+class perpusItem:
+    def __init__(self, judul, subjek):
+        self.judul = judul
+        self.subjek = subjek
+        
+    def LokasiPenyimpanan(self):
+        if "komputer" in self.subjek:
+            return "Rak A"
+        elif "biografi" in self.subjek:
+            return "Rak B"
+        elif "pengetahuan" in self.subjek:
+            return "Rak C"
+        elif "sejarah" in self.subjek:
+            return "Rak D"
+        else:
+            return "Rak E"
+        
+    def info(self):
+        print("Judul Buku : ",self.judul)
+        print("Subjek Buku : ", self.subjek)
+        print("Lokasi Buku Berada DI : ", self.LokasiPenyimpanan())
+        
+
+class Pengarang:
+    def __init__(self, nama):
+        self.nama = nama
+        
+    def info(self):
+        print("Nama pengarang : ", self.nama)
+        
+    def cari(self, query):
+        hasilPencarian = []
+        if query.lower() in self.nama.lower():
+            hasilPencarian.append(self)
+        return hasilPencarian    
+    
+class Buku(perpusItem):
+    def __init__(self,judul, subjek, isbn, pengarangs, jmlHal, ukuran):
+        super().__init__(judul, subjek)
+        self.isbn = isbn
+        self.pengarangs = pengarangs
+        self.jmlHal = jmlHal
+        self.ukuran = ukuran
+        
+class Majalah(perpusItem):
+    def __init__(self,judul, subjek, volume, issue):
+        super().__init__(judul, subjek)
+        self.volume = volume
+        self.issue = issue
+        
+class DVD(perpusItem):
+    def __init__(self,judul, subjek, Aktor, Genre):
+        super().__init__(judul, subjek)
+        self.Aktor = Aktor
+        self.Genre = Genre
+        
+
+katalog = Katalog
+
+buku1 = Buku("Dimas sang legenda", "sejarah", "123333", ["Kurnia Rahman"], 120, "25cm x 10cm x 5cm")
+majalah1 = Majalah("bobo", "anak - anak", "2", "tumbuh kembang anak")
+dvd1 = DVD("Lagu barat populer", "Musc", "all artist", "pop")
+
+katalog.items.extend([buku1, majalah1, dvd1])
+
+cariBuku = katalog.cari("Dimas")
+if cariBuku:
+    item = cariBuku[0]
+    item.info()
+    
+cariMajalah = katalog.cari("bobo")
+if cariMajalah:
+    item = cariMajalah[0]
+    item.info()
+    
+cariDvd = katalog.cari("Lagu barat populer")
+if cariDvd:
+    item = cariDvd[0]
+    item.info
+    
