@@ -15,7 +15,7 @@ class Peternakan:
             host="localhost",
             user="root",
             password="",
-            database="peternakan",
+            database="5220411179",
             port=3306
         )
         self.cursor = self.db_connection.cursor()
@@ -97,8 +97,9 @@ class Peternakan:
 
     def informasi_hewan(self):
         print("\n===== Informasi Hewan Ternak =====")
+        self.daftar_hewan = self.select_all_hewan()
         for hewan in self.daftar_hewan:
-            print(f"Nama: {hewan['nama']}, Umur: {hewan['umur']}, Harga: {hewan['harga']}, Jumlah: {hewan['jumlah']}")
+            print(f"Nama: {hewan[1]}, Umur: {hewan[2]}, Harga: {hewan[3]}, Jumlah: {hewan[4]}")
         print("===============================")
 
     def beli_hewan(self):
@@ -122,13 +123,11 @@ class Peternakan:
         jumlah_hewan = int(input("Jumlah Hewan: "))
 
         for hewan in self.daftar_hewan:
-            if hewan['nama'] == nama_hewan:
-                if hewan['jumlah'] >= jumlah_hewan:
-                    hewan['jumlah'] -= jumlah_hewan
+            if hewan[1] == nama_hewan:
+                if hewan[4] >= jumlah_hewan:
+                    updated_jumlah = hewan[4] - jumlah_hewan
+                    self.update_hewan(hewan[0], hewan[1], hewan[2], hewan[3], updated_jumlah)
                     print(f"Berhasil menjual {jumlah_hewan} {nama_hewan}.")
-                    
-                    
-                    self.update_hewan(hewan.get('id'), hewan['nama'], hewan['umur'], hewan['harga'], hewan['jumlah'])
                 else:
                     print(f"Tidak cukup {nama_hewan} untuk dijual.")
                 break
@@ -295,3 +294,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
